@@ -2,7 +2,8 @@ sonar_testing:
   stage: test
   image:
     name: newtmitch/sonar-scanner
-    entrypoint: /bin/bash
+    entrypoint:
+      - /bin/bash
   script:
     - env
     - sonar-scanner \
