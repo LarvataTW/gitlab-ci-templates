@@ -6,8 +6,8 @@ sonar_testing:
       - /bin/bash
   script:
     - env
-    - sonar-scanner \
-      -Dsonar.projectKey=${CI_PROJECT_PATH_SLUG} \
-      -Dsonar.sources=. \
-      -Dsonar.host.url=https://sonar.atavral.ninja \
+    - sonar-scanner
+      -Dsonar.projectKey=${CI_PROJECT_PATH_SLUG}
+      -Dsonar.sources=.
+      -Dsonar.host.url=https://sonar.atavral.ninja
       -Dsonar.login=${SONAR_TOKEN}
