@@ -6,6 +6,7 @@ sonar_testing:
       - /bin/bash
   script:
     - env
+    - ls -la
     - >
       sonar-scanner
       -Dsonar.projectKey=${CI_PROJECT_PATH_SLUG}
