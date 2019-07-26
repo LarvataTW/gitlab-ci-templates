@@ -7,6 +7,7 @@ sonar_testing:
   script:
     - >
       sonar-scanner
+      -Dsonar.projectName=${CI_PROJECT_PATH_SLUG}
       -Dsonar.projectKey=${CI_PROJECT_PATH_SLUG}
       -Dsonar.projectBaseDir=${CI_PROJECT_DIR}
       -Dsonar.sources=.
