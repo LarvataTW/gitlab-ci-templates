@@ -1,0 +1,12 @@
+sonar_testing:
+  stage: test
+  image:
+    name: newtmitch/sonar-scanner
+    entrypoint: /bin/bash
+  script:
+    - env
+    - sonar-scanner \
+      -Dsonar.projectKey=${CI_PROJECT_NAME} \
+      -Dsonar.sources=. \
+      -Dsonar.host.url=https://sonar.atavral.ninja \
+      -Dsonar.login=${SONAR_TOKEN}
