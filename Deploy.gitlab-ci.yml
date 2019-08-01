@@ -1,5 +1,5 @@
 .auto-deploy:
-  image: "registry.gitlab.com/happiness9721/auto-deploy-image/mariadb:7dda0323b773c6c1c6c8450b7b5d47a557fd5a5e"
+  image: "registry.gitlab.com/happiness9721/auto-deploy-image/mariadb:latest"
 
 review:
   extends: .auto-deploy
