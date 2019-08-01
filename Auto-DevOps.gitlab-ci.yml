@@ -81,10 +81,10 @@ include:
   - template: Jobs/Code-Quality.gitlab-ci.yml # https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
   - project: 'larvata/devops/gitlab-ci-templates'
     ref: master
-    file: 'Sonar-Test.gitlab-ci.yml'
+    file: 'Jobs/Sonar-Test.gitlab-ci.yml'
   - project: 'larvata/devops/gitlab-ci-templates'
     ref: master
-    file: 'Deploy.gitlab-ci.yml'
+    file: 'Jobs/Deploy.gitlab-ci.yml'
   - template: Jobs/Browser-Performance-Testing.gitlab-ci.yml # https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/ci/templates/Jobs/Browser-Performance-Testing.gitlab-ci.yml
   - template: Security/DAST.gitlab-ci.yml # https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/ci/templates/Security/DAST.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml # https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/ci/templates/Security/Container-Scanning.gitlab-ci.yml
