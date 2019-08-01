@@ -59,10 +59,6 @@ variables:
 
   DOCKER_TLS_CERTDIR: "" # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
 
-  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "-f docker/Dockerfile"
-  HELM_UPGRADE_EXTRA_ARGS: "--set service.internalPort=80 --set ingress.tls.enabled=false --set ingress.annotations.kubernetes\\.io/ingress\\.class=traefik"
-  DB_INITIALIZE: docker/rails.sh
-
 stages:
   - build
   - test
