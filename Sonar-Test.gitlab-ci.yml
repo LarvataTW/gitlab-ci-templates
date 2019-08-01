@@ -4,6 +4,8 @@ sonar_testing:
     name: newtmitch/sonar-scanner
     entrypoint:
       - /bin/bash
+  variables:
+    GIT_DEPTH: 0
   script:
     - >
       sonar-scanner
