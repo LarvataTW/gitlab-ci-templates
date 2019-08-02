@@ -1,6 +1,7 @@
 # GitLab CI Templates
 
 From https://gitlab.com/gitlab-org/gitlab-ce/tree/master/lib/gitlab/ci/templates
+
 Lastest Sync Commit: b297cdcb
 
 ## TL;DR
