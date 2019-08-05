@@ -51,5 +51,5 @@ include:
 include:
   - project: 'larvata/devops/gitlab-ci-templates'
     ref: master
-    file: 'Golang.gitlab-ci.yml'
+    file: 'Go.gitlab-ci.yml'
 ```
