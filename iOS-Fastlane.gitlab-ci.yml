@@ -1,0 +1,87 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  LC_ALL: en_US.UTF-8
+  LANG: en_US.UTF-8
+  XCODE_SCHEME_NAME: ""
+  XCODE_SCHEME_NAME_BETA: ""
+  XCODE_PRODUCT_NAME: ""
+  XCODE_PRODUCT_NAME_BETA: ""
+  MATCH_APP_IDENTIFIER_BETA: ""
+
+archive_adhoc_app:
+  stage: build
+  tags:
+    - macOS
+  except:
+    - master
+    - tags
+  variables:
+    XCODE_SCHEME: $XCODE_SCHEME_NAME_BETA
+    MATCH_APP_IDENTIFIER: $MATCH_APP_IDENTIFIER_BETA
+  script:
+    - bundle install
+    - bundle exec pod install
+    - git config --global credential.helper store
+    - echo "https://larvata_taiwan:${GIT_PASS}@bitbucket.org" > ~/.git-credentials
+    - bundle exec fastlane ios archive_adhoc --verbose
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - ${XCODE_PRODUCT_NAME_BETA}.ipa
+      - ${XCODE_PRODUCT_NAME_BETA}.app.dSYM.zip
+
+archive_appstore_app:
+  stage: build
+  tags:
+    - macOS
+  only:
+    - tags
+  variables:
+    XCODE_SCHEME: $XCODE_SCHEME_NAME
+  script:
+    - bundle install
+    - bundle exec pod install
+    - git config --global credential.helper store
+    - echo "https://larvata_taiwan:${GIT_PASS}@bitbucket.org" > ~/.git-credentials
+    - bundle exec fastlane ios archive_appstore --verbose
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - ${XCODE_PRODUCT_NAME}.ipa
+      - ${XCODE_PRODUCT_NAME}.app.dSYM.zip
+
+deploy_adhoc_app:
+  stage: deploy
+  tags:
+    - macOS
+  except:
+    - master
+    - tags
+  script:
+    - bundle install
+    - bundle exec pod install
+    - bundle exec fastlane ios beta_fabric --verbose
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - ${XCODE_PRODUCT_NAME_BETA}.ipa
+      - ${XCODE_PRODUCT_NAME_BETA}.app.dSYM.zip
+
+deploy_appstore_app:
+  stage: deploy
+  tags:
+    - macOS
+  only:
+    - tags
+  script:
+    - bundle install
+    - bundle exec pod install
+    - bundle exec fastlane ios beta_testflight --verbose
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - ${XCODE_PRODUCT_NAME}.ipa
+      - ${XCODE_PRODUCT_NAME}.app.dSYM.zip
