@@ -15,3 +15,6 @@ sonar_testing:
       -Dsonar.sources=.
       -Dsonar.host.url=https://sonar.atavral.ninja
       -Dsonar.login=${SONAR_TOKEN}
+  only:
+    variables:
+      - $SONAR_TOKEN
