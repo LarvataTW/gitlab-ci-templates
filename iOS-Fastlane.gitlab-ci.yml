@@ -1,5 +1,11 @@
+include:
+  - project: 'larvata/devops/gitlab-ci-templates'
+    ref: master
+    file: 'Jobs/Sonar-Test.gitlab-ci.yml'
+    
 stages:
   - build
+  - test
   - deploy
 
 variables:
