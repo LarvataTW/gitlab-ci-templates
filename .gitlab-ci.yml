@@ -66,6 +66,8 @@ deploy_adhoc_app:
   except:
     - master
     - tags
+  variables:
+    MATCH_APP_IDENTIFIER: $MATCH_APP_IDENTIFIER_BETA
   script:
     - bundle install
     - bundle exec pod install
