@@ -16,6 +16,7 @@ variables:
   XCODE_PRODUCT_NAME: ""
   XCODE_PRODUCT_NAME_BETA: ""
   MATCH_APP_IDENTIFIER_BETA: ""
+  FASTLANE_ADHOC_METHOD: fabric
 
 archive_adhoc_app:
   stage: build
@@ -71,7 +72,7 @@ deploy_adhoc_app:
   script:
     - bundle install
     - bundle exec pod install
-    - bundle exec fastlane ios beta_fabric --verbose
+    - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     paths:
