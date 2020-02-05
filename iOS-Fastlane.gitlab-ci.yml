@@ -94,6 +94,8 @@ deploy_adhoc_app:
     paths:
       - ${XCODE_PRODUCT_NAME}-${CI_COMMIT_REF_SLUG}.ipa
       - ${XCODE_PRODUCT_NAME}-${CI_COMMIT_REF_SLUG}.app.dSYM.zip
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
       
 deploy_staging_app:
   stage: deploy
@@ -110,6 +112,8 @@ deploy_staging_app:
     paths:
       - ${XCODE_PRODUCT_NAME}-staging.ipa
       - ${XCODE_PRODUCT_NAME}-staging.app.dSYM.zip
+  environment:
+    name: staging
 
 deploy_appstore_app:
   stage: deploy
@@ -126,3 +130,5 @@ deploy_appstore_app:
     paths:
       - ${XCODE_PRODUCT_NAME}.ipa
       - ${XCODE_PRODUCT_NAME}.app.dSYM.zip
+  environment:
+    name: production
