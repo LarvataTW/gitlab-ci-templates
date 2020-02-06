@@ -16,6 +16,7 @@ variables:
   XCODE_PRODUCT_NAME: ""
   # optional
   FASTLANE_ADHOC_METHOD: firebase
+  # GOOGLE_SERVICE_PLIST_PATH: /path/to/GoogleService-Info.plist
 
 archive_adhoc_app:
   stage: build
@@ -89,11 +90,8 @@ deploy_adhoc_app:
     - bundle install
     - bundle exec pod install
     - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
-  artifacts:
-    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
-    paths:
-      - ${XCODE_PRODUCT_NAME}-${CI_COMMIT_REF_SLUG}.ipa
-      - ${XCODE_PRODUCT_NAME}-${CI_COMMIT_REF_SLUG}.app.dSYM.zip
+    - [ -z "$GOOGLE_SERVICE_PLIST_PATH" ] && find . -name "*.dSYM.zip" | xargs -I \{\} ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios \{\}
+
   environment:
     name: review/$CI_COMMIT_REF_NAME
       
@@ -107,11 +105,7 @@ deploy_staging_app:
     - bundle install
     - bundle exec pod install
     - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
-  artifacts:
-    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
-    paths:
-      - ${XCODE_PRODUCT_NAME}-staging.ipa
-      - ${XCODE_PRODUCT_NAME}-staging.app.dSYM.zip
+    - [ -z "$GOOGLE_SERVICE_PLIST_PATH" ] && find . -name "*.dSYM.zip" | xargs -I \{\} ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios \{\}
   environment:
     name: staging
 
@@ -125,10 +119,6 @@ deploy_appstore_app:
     - bundle install
     - bundle exec pod install
     - bundle exec fastlane ios beta_testflight --verbose
-  artifacts:
-    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
-    paths:
-      - ${XCODE_PRODUCT_NAME}.ipa
-      - ${XCODE_PRODUCT_NAME}.app.dSYM.zip
+    - [ -z "$GOOGLE_SERVICE_PLIST_PATH" ] && find . -name "*.dSYM.zip" | xargs -I \{\} ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios \{\}
   environment:
     name: production
