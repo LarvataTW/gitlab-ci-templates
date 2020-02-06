@@ -92,7 +92,7 @@ deploy_adhoc_app:
     - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
     - >
       if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
-        find . -name "*.dSYM.zip" | xargs -I \{\} ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios \{\}
+        find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
       if
 
   environment:
@@ -110,7 +110,7 @@ deploy_staging_app:
     - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
     - >
       if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
-        find . -name "*.dSYM.zip" | xargs -I \{\} ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios \{\}
+        find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
       if
   environment:
     name: staging
@@ -127,7 +127,7 @@ deploy_appstore_app:
     - bundle exec fastlane ios beta_testflight --verbose
     - >
       if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
-        find . -name "*.dSYM.zip" | xargs -I \{\} ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios \{\}
+        find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
       if
   environment:
     name: production
