@@ -15,7 +15,7 @@ variables:
   XCODE_SCHEME_NAME: ""
   XCODE_PRODUCT_NAME: ""
   # optional
-  FASTLANE_ADHOC_METHOD: fabric
+  FASTLANE_ADHOC_METHOD: firebase
 
 archive_adhoc_app:
   stage: build
