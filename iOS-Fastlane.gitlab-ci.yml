@@ -93,8 +93,7 @@ deploy_adhoc_app:
     - >
       if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
         find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
-      if
-
+      fi
   environment:
     name: review/$CI_COMMIT_REF_NAME
       
@@ -111,7 +110,7 @@ deploy_staging_app:
     - >
       if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
         find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
-      if
+      fi
   environment:
     name: staging
 
@@ -128,6 +127,6 @@ deploy_appstore_app:
     - >
       if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
         find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
-      if
+      fi
   environment:
     name: production
