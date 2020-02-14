@@ -102,7 +102,10 @@ deploy_staging_app:
   tags:
     - macOS
   only:
-    - master
+    refs:
+      - master
+    variables:
+      - $STAGING_ENABLED
   script:
     - bundle install
     - bundle exec pod install
