@@ -44,7 +44,10 @@ archive_staging_app:
   tags:
     - macOS
   only:
-    - master
+    refs:
+      - master
+    variables:
+      - $STAGING_ENABLED
   variables:
     XCODE_SCHEME: "$XCODE_SCHEME_NAME staging"
   script:
