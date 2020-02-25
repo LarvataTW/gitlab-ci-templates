@@ -93,10 +93,6 @@ deploy_adhoc_app:
     - bundle install
     - bundle exec pod install
     - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
-    - >
-      if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
-        find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
-      fi
   environment:
     name: review/$CI_COMMIT_REF_NAME
       
@@ -113,10 +109,6 @@ deploy_staging_app:
     - bundle install
     - bundle exec pod install
     - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
-    - >
-      if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
-        find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
-      fi
   environment:
     name: staging
 
@@ -130,9 +122,5 @@ deploy_appstore_app:
     - bundle install
     - bundle exec pod install
     - bundle exec fastlane ios beta_testflight --verbose
-    - >
-      if [ -z "$GOOGLE_SERVICE_PLIST_PATH" ]; then
-        find . -name "*.dSYM.zip" | xargs ./Pods/Fabric/upload-symbols -gsp ${GOOGLE_SERVICE_PLIST_PATH} -p ios
-      fi
   environment:
     name: production
