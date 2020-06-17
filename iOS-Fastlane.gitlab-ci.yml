@@ -118,6 +118,7 @@ deploy_appstore_app:
   script:
     - bundle install
     - bundle exec pod install
+    - echo "${MATCH_GC_KEYS}" > gc_keys.json
     - bundle exec fastlane ios beta_testflight --verbose
   environment:
     name: production
