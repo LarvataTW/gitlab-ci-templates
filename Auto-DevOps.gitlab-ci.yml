@@ -48,7 +48,7 @@ variables:
   MARIA_PASSWORD: testing-password
   MARIA_ENABLED: "true"
   MARIA_DB: $CI_ENVIRONMENT_SLUG
-  MARIA_VERSION: 10.4.6
+  MARIA_VERSION: 10.3.16-debian-9-r29
 
   REDIS_ENABLED: "true"
   REDIS_VERSION: 5.0.5
