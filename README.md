@@ -53,3 +53,31 @@ include:
     ref: master
     file: 'Go.gitlab-ci.yml'
 ```
+
+## CI for Android Projects
+
+1. 在專案目錄下建立 .gitlab-ci.yml 檔案
+2. 填入以下內容。
+
+```yml
+include:
+  - project: 'larvata/devops/gitlab-ci-templates'
+    ref: master
+    file: 'android.gitlab-ci.yml'
+```
+
+3. 確認要產出的方式為何，然後使用extends並且在script用gradlew指令去進行。有其他buildVariant請先 ./gradlew task 檢查指令
+ex:
+
+```yml
+buildVariant_main_debug:
+  only: develop
+  extends: .assembleDebug
+
+buildVariant_main_pushToFirebase:
+  extends: .appModuleDebugVerToFirebase
+
+buildVariant_main_release:
+  only: master
+  extends: .assembleRelease
+```
