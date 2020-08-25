@@ -30,37 +30,56 @@ stages:
   - build
   - test
   - package
+  - deploy
 
 lintDebug:
+  tags:
+    - android
   stage: build
   script:
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-
-gradlewLint:
-  stage: test
-  script:
-    - ./gradlew lint --stacktrace
   artifacts:
     paths:
       - app/build/reports
 
-.debug:
-  stage: package
+# test put here
+
+.assembleDebug:
+  tags: build
+  script:
+  - ./gradlew assembleDebug --scan --build-cache --parallel --daemon
   paths:
     - app/build/outputs/apk/debug/*.apk
 
-# push main app debug ver. to firebase-app-distribution
+.assembleRelease:
+  tags: build
+  script:
+  - ./gradlew assembleRelease --scan --build-cache --parallel --daemon
+  paths:
+    - app/build/outputs/apk/release/*.apk
+
 .appModuleDebugVerToFirebase:
-  stage: package
+  tags:
+    - android
+  stage: deploy
   environment: Development
   only: develop
   script:
     - ./gradlew assembleDebug appDistributionUploadDebug --stacktrace
 
-.release:
+.releaseByCIJob:
+  tags:
+    - android
   stage: package
-  only: master
   artifacts:
     name: "${CI_COMMIT_REF_SLUG}_${CI_JOB_NAME}_release"
     paths:
       - app/build/outputs/apk/$CI_JOB_NAME/release/*.apk
+
+# .pushReleaseVerToGoogleDrive:
+#   tags:
+#     - deploy
+#   stage: package
+#   script:
+#    - gdrive
+    # TODO: put whole file to google drive
