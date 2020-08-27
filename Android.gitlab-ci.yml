@@ -32,12 +32,12 @@ stages:
   - package
   - deploy
 
-lintDebug:
+.lint:
   tags:
     - android
   stage: build
   script:
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+    - ./gradlew lint
   artifacts:
     paths:
       - app/build/reports
