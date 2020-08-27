@@ -45,7 +45,8 @@ lintDebug:
 # test put here
 
 .assembleDebug:
-  tags: build
+  tags:
+    - android
   script:
   - ./gradlew assembleDebug --scan --build-cache --parallel --daemon
   artifacts:
@@ -53,7 +54,8 @@ lintDebug:
       - app/build/outputs/apk/debug/*.apk
 
 .assembleRelease:
-  tags: build
+  tags:
+    - android
   script:
   - ./gradlew assembleRelease --scan --build-cache --parallel --daemon
   artifacts:
