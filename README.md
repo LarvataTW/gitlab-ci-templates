@@ -56,6 +56,8 @@ include:
 
 ## CI for Android Projects
 
+### image: https://github.com/lakoo/lakoo-android-ndk
+
 1. 在專案目錄下建立 .gitlab-ci.yml 檔案
 2. 填入以下內容。
 
