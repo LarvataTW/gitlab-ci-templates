@@ -56,6 +56,8 @@ include:
 
 ## CI for Android Projects
 
+### image: https://github.com/lakoo/lakoo-android-ndk
+
 1. 在專案目錄下建立 .gitlab-ci.yml 檔案
 2. 填入以下內容。
 
@@ -70,14 +72,21 @@ include:
 ex:
 
 ```yml
+
+lintTest:
+  extends: .lint
+
 buildVariant_main_debug:
-  only: develop
+  only:
+    - develop
   extends: .assembleDebug
+
+buildVariant_main_release:
+  only:
+    - master
+  extends: .assembleRelease
 
 buildVariant_main_pushToFirebase:
   extends: .appModuleDebugVerToFirebase
 
-buildVariant_main_release:
-  only: master
-  extends: .assembleRelease
 ```

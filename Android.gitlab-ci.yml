@@ -3,7 +3,7 @@ include:
     ref: master
     file: 'Jobs/Sonar-Test.gitlab-ci.yml'
 
-image: jangrewe/gitlab-ci-android
+image: lakoo/android-ndk:25-25.0.3-r14b
 
 variables:
   ANDROID_COMPILE_SDK: "29"
