@@ -51,7 +51,7 @@ stages:
   - ./gradlew assembleDebug --scan --build-cache --parallel --daemon
   artifacts:
     paths:
-      - app/build/outputs/apk/debug/*.apk
+      - app/build/outputs/
 
 .assembleRelease:
   tags:
@@ -60,7 +60,7 @@ stages:
   - ./gradlew assembleRelease --scan --build-cache --parallel --daemon
   artifacts:
     paths:
-      - app/build/outputs/apk/release/*.apk
+      - app/build/outputs/
 
 .appModuleDebugVerToFirebase:
   tags:
