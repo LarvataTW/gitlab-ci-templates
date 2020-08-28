@@ -70,14 +70,21 @@ include:
 ex:
 
 ```yml
+
+lintTest:
+  extends: .lint
+
 buildVariant_main_debug:
-  only: develop
+  only:
+    - develop
   extends: .assembleDebug
+
+buildVariant_main_release:
+  only:
+    - master
+  extends: .assembleRelease
 
 buildVariant_main_pushToFirebase:
   extends: .appModuleDebugVerToFirebase
 
-buildVariant_main_release:
-  only: master
-  extends: .assembleRelease
 ```
