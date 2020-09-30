@@ -66,8 +66,6 @@ stages:
   tags:
     - android
   stage: deploy
-  environment: Development
-  only: develop
   script:
     - ./gradlew assembleDebug appDistributionUploadDebug --stacktrace
 
