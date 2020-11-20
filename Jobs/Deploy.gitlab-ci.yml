@@ -1,9 +1,6 @@
 .auto-deploy:
-  image: "registry.gitlab.com/happiness9721/auto-deploy-image/mariadb:6ebeec41267104d8624a0115a1bd0f34f1ac9d2e"
+  image: "registry.gitlab.com/happiness9721/auto-deploy-image/mariadb:50170adfab5d72b15a39d5f24173bbedc9734548"
   dependencies: []
-
-include:
-  - template: Jobs/Deploy/ECS.gitlab-ci.yml
 
 review:
   extends: .auto-deploy
@@ -189,7 +186,7 @@ production_manual:
       when: never
     - if: '$CI_COMMIT_BRANCH != "master"'
       when: never
-    # $INCREMENTAL_ROLLOUT_ENABLED is for compamtibilty with pre-GitLab 11.4 syntax
+    # $INCREMENTAL_ROLLOUT_ENABLED is for compatibility with pre-GitLab 11.4 syntax
     - if: '$INCREMENTAL_ROLLOUT_MODE == "manual" || $INCREMENTAL_ROLLOUT_ENABLED'
       when: manual
 
