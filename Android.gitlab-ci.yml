@@ -69,6 +69,20 @@ stages:
   script:
     - ./gradlew assembleDebug appDistributionUploadDebug --stacktrace
 
+.appModuleStagingVerToFirebase:
+  tags:
+    - android
+  stage: deploy
+  script:
+    - ./gradlew assembleStaging appDistributionUploadStaging --stacktrace
+
+.appModuleReleaseVerToFirebase:
+  tags:
+    - android
+  stage: deploy
+  script:
+    - ./gradlew assembleRelease appDistributionUploadRelease --stacktrace
+
 .releaseByCIJob:
   tags:
     - android
