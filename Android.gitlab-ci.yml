@@ -27,6 +27,7 @@ before_script:
   - set -o pipefail
 
 stages:
+  - prepare
   - build
   - test
   - package
@@ -43,6 +44,42 @@ stages:
       - app/build/reports
 
 # test put here
+
+load_signing_properties:
+  only:
+    - master
+  stage: prepare
+  script:
+    - base64 -d $KEY_STORE_FILE > keyFile.keystore
+    - echo "keystorePath=keyFile.keystore" > signing.properties
+    - echo "keyAlias=$KEY_ALIAS" >> signing.properties
+    - echo "keyPassword=$KEY_PASSWORD" >> signing.properties
+    - echo "storePassword=$STORE_PASSWORD" >> signing.properties
+  artifacts:
+    paths:
+      - keyFile.keystore
+      - signing.properties
+    expire_in: 30 mins
+
+load_firebase_sa:
+  stage: prepare
+  script:
+    - echo $FIREBASE_SA_JSON > firebase_sa.json
+  artifacts:
+    paths:
+      - firebase_sa.json
+    expire_in: 30 mins 
+
+load_google_play_sa:
+  stage: prepare
+  only:
+    - master
+  script:
+    - echo $GOOGLE_PLAY_SA_JSON > google_play_sa.json
+  artifacts:
+    paths:
+      - google_play_sa.json
+    expire_in: 30 mins 
 
 .assembleDebug:
   tags:
@@ -82,6 +119,13 @@ stages:
   stage: deploy
   script:
     - ./gradlew assembleRelease appDistributionUploadRelease --stacktrace
+
+.appModuleReleaseVerToGooglePlay:
+  tags:
+    - android
+  stage: deploy
+  script:
+    - ./gradlew bundleRelease publishReleaseBundle --stacktrace
 
 .releaseByCIJob:
   tags:
