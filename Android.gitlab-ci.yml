@@ -48,6 +48,7 @@ stages:
 load_signing_properties:
   only:
     - master
+    - tags
   stage: prepare
   script:
     - base64 -d $KEY_STORE_FILE > keyFile.keystore
@@ -74,6 +75,7 @@ load_google_play_sa:
   stage: prepare
   only:
     - master
+    - tags
   script:
     - echo $GOOGLE_PLAY_SA_JSON > google_play_sa.json
   artifacts:
