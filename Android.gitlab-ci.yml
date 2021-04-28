@@ -27,13 +27,12 @@ before_script:
   - set -o pipefail
 
 stages:
-  - prepare
   - build
   - test
   - package
   - deploy
 
-.lint:
+lint:
   tags:
     - android
   stage: build
@@ -45,90 +44,6 @@ stages:
 
 # test put here
 
-load_signing_properties:
-  only:
-    - master
-    - tags
-  stage: prepare
-  script:
-    - base64 -d $KEY_STORE_FILE > keyFile.keystore
-    - echo "keystorePath=keyFile.keystore" > signing.properties
-    - echo "keyAlias=$KEY_ALIAS" >> signing.properties
-    - echo "keyPassword=$KEY_PASSWORD" >> signing.properties
-    - echo "storePassword=$STORE_PASSWORD" >> signing.properties
-  artifacts:
-    paths:
-      - keyFile.keystore
-      - signing.properties
-    expire_in: 30 mins
-
-load_firebase_sa:
-  stage: prepare
-  script:
-    - echo $FIREBASE_SA_JSON > firebase_sa.json
-  artifacts:
-    paths:
-      - firebase_sa.json
-    expire_in: 30 mins 
-
-load_google_play_sa:
-  stage: prepare
-  only:
-    - master
-    - tags
-  script:
-    - echo $GOOGLE_PLAY_SA_JSON > google_play_sa.json
-  artifacts:
-    paths:
-      - google_play_sa.json
-    expire_in: 30 mins 
-
-.assembleDebug:
-  tags:
-    - android
-  script:
-  - ./gradlew assembleDebug --scan --build-cache --parallel --daemon
-  artifacts:
-    paths:
-      - app/build/outputs/
-
-.assembleRelease:
-  tags:
-    - android
-  script:
-  - ./gradlew assembleRelease --scan --build-cache --parallel --daemon
-  artifacts:
-    paths:
-      - app/build/outputs/
-
-.appModuleDebugVerToFirebase:
-  tags:
-    - android
-  stage: deploy
-  script:
-    - ./gradlew assembleDebug appDistributionUploadDebug --stacktrace
-
-.appModuleStagingVerToFirebase:
-  tags:
-    - android
-  stage: deploy
-  script:
-    - ./gradlew assembleStaging appDistributionUploadStaging --stacktrace
-
-.appModuleReleaseVerToFirebase:
-  tags:
-    - android
-  stage: deploy
-  script:
-    - ./gradlew assembleRelease appDistributionUploadRelease --stacktrace
-
-.appModuleReleaseVerToGooglePlay:
-  tags:
-    - android
-  stage: deploy
-  script:
-    - ./gradlew bundleRelease publishReleaseBundle --stacktrace
-
 .releaseByCIJob:
   tags:
     - android
@@ -137,6 +52,74 @@ load_google_play_sa:
     name: "${CI_COMMIT_REF_SLUG}_${CI_JOB_NAME}_release"
     paths:
       - app/build/outputs/apk/$CI_JOB_NAME/release/*.apk
+
+assemble_debug:
+  tags:
+    - android
+  stage: package
+  script:
+  - ./gradlew assembleDebug --scan --build-cache --parallel --daemon
+  artifacts:
+    paths:
+      - app/build/outputs/
+    expire_in: 2 days
+
+default_module_debug_ver_app_distribution:
+  tags:
+    - android
+  only:
+    - develop
+  stage: deploy
+  script:
+    - ./gradlew assembleDebug appDistributionUploadDebug --stacktrace
+
+default_module_staging_ver_app_distribution:
+  tags:
+    - android
+  only:
+    refs:
+      - master
+    variables:
+      - $STAGING_ENABLED
+  stage: deploy
+  script:
+    - echo "${FIREBASE_SA_JSON}" > firebase_sa.json
+    - base64 -d "${KEY_STORE_FILE}" > keyFile.keystore
+    - echo "keystorePath=keyFile.keystore" > signing.properties
+    - echo "keyAlias=${KEY_ALIAS}" >> signing.properties
+    - echo "keyPassword=${KEY_PASSWORD}" >> signing.properties
+    - echo "storePassword=${STORE_PASSWORD}" >> signing.properties
+    - ./gradlew assembleStaging appDistributionUploadStaging --stacktrace
+
+default_module_release_ver_aab_google_play:
+  tags:
+    - android
+  only:
+    - tags
+  stage: deploy
+  script:
+    - echo $GOOGLE_PLAY_SA_JSON > google_play_sa.json
+    - base64 -d "${KEY_STORE_FILE}" > keyFile.keystore
+    - echo "keystorePath=keyFile.keystore" > signing.properties
+    - echo "keyAlias=${KEY_ALIAS}" >> signing.properties
+    - echo "keyPassword=${KEY_PASSWORD}" >> signing.properties
+    - echo "storePassword=${STORE_PASSWORD}" >> signing.properties
+    - ./gradlew bundleRelease publishReleaseBundle --stacktrace
+
+.default_module_release_ver_app_distribution:
+  tags:
+    - android
+  only:
+    - master
+  stage: deploy
+  script:
+    - echo "${FIREBASE_SA_JSON}" > firebase_sa.json
+    - base64 -d "${KEY_STORE_FILE}" > keyFile.keystore
+    - echo "keystorePath=keyFile.keystore" > signing.properties
+    - echo "keyAlias=${KEY_ALIAS}" >> signing.properties
+    - echo "keyPassword=${KEY_PASSWORD}" >> signing.properties
+    - echo "storePassword=${STORE_PASSWORD}" >> signing.properties
+    - ./gradlew assembleRelease appDistributionUploadRelease --stacktrace
 
 # .pushReleaseVerToGoogleDrive:
 #   tags:
