@@ -71,6 +71,7 @@ default_module_debug_ver_app_distribution:
     - develop
   stage: deploy
   script:
+    - echo "${FIREBASE_SA_JSON}" > firebase_sa.json
     - ./gradlew assembleDebug appDistributionUploadDebug --stacktrace
 
 default_module_staging_ver_app_distribution:
