@@ -16,6 +16,7 @@ variables:
   XCODE_PRODUCT_NAME: ""
   # optional
   FASTLANE_ADHOC_METHOD: firebase
+  DEPLOY_DISABLED: false
   # GOOGLE_SERVICE_PLIST_PATH: /path/to/GoogleService-Info.plist
 
 archive_adhoc_app:
@@ -84,8 +85,11 @@ deploy_adhoc_app:
   tags:
     - macOS
   except:
-    - master
-    - tags
+    refs:
+      - master
+      - tags
+    variables:
+      - $DEPLOY_DISABLED == "true"
   script:
     - bundle install
     - bundle exec pod install
@@ -102,6 +106,9 @@ deploy_staging_app:
       - master
     variables:
       - $STAGING_ENABLED
+  except:
+    variables:
+      - $DEPLOY_DISABLED == "true"
   script:
     - bundle install
     - bundle exec pod install
@@ -115,6 +122,9 @@ deploy_appstore_app:
     - macOS
   only:
     - tags
+  except:
+    variables:
+      - $DEPLOY_DISABLED == "true"
   script:
     - bundle install
     - bundle exec pod install
