@@ -16,7 +16,7 @@ variables:
   XCODE_PRODUCT_NAME: ""
   # optional
   FASTLANE_ADHOC_METHOD: firebase
-  DEPLOY_DISABLED: false
+  DEPLOY_DISABLED: "false"
   # GOOGLE_SERVICE_PLIST_PATH: /path/to/GoogleService-Info.plist
 
 archive_adhoc_app:
