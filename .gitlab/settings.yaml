@@ -1,0 +1,30 @@
+# This is an example file for tasks in Jobs/Prepare.gitlab-ci.yml
+# Those config values will map into Gitlab project's setting configuration.
+
+---
+
+clean_up_image_tags:
+  purge: true
+  rotate: 7 days
+  mini: 3
+
+# The CI/CD variables for different environments.
+environments:
+
+  - name: "*"
+    protected: false
+    masked: false
+    variables:
+      - DB_NAME: hello
+      - DB_USERNAME: test
+      - DB_PASSWORD: 87654321
+
+  - name: "production"
+    protected: false
+    masked: false
+    variables:
+      - DB_NAME: foobar
+      - DB_USERNAME: test
+      - DB_PASSWORD: 12345678
+      - SECRET_KEY: secret
+      - APP_NAME: 測試中文
