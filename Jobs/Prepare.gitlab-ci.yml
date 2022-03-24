@@ -7,7 +7,6 @@ prepare:
     NO_PROXY: "localhost,127.0.0.1,.your.internal.domain"
     GITLAB_SETTING_FILE: ".gitlab/settings.yaml"
   script:
-    - env
     - |
       if [[ -z "$GITLAB_PRIVATE_TOKEN" ]]; then
         echo "Do nothing."
