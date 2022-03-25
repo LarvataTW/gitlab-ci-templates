@@ -15,8 +15,8 @@ deploy_tokens:
     scopes:
       - read_registry
 
-  - name: gitlab-deploy-token
-    username: "foobar"
+  - name: foo
+    username: bar
     scopes:
       - read_repository
       - read_registry
