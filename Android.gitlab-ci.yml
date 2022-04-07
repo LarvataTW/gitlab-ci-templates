@@ -1,7 +1,5 @@
 include:
-  - project: 'larvata/devops/gitlab-ci-templates'
-    ref: master
-    file: 'Jobs/Sonar-Test.gitlab-ci.yml'
+  - "https://raw.githubusercontent.com/LarvataTW/gitlab-ci-templates/master/Jobs/Sonar-Test.gitlab-ci.yml"
 
 image: androidsdk/android-30
 
