@@ -15,4 +15,6 @@ prepare:
         python /app/main.py
       fi
   rules:
+    - if: '$PREPARE_DISABLED'
+      when: never
     - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
