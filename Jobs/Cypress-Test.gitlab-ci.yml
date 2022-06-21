@@ -1,0 +1,4 @@
+# https://github.com/cypress-io/cypress-realworld-app/blob/develop/.gitlab-ci.yml
+# https://docs.cypress.io/guides/continuous-integration/gitlab-ci
+
+# for frontend testing
