@@ -132,7 +132,7 @@ success_notification:
       - $WEBHOOK_URL
   stage: notification
   script:
-    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{'embeds':[{'title':'$CI_JOB_NAME','description':'Success','color':5763719}],'content':'<@&525170830741602314>'}" $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_JOB_NAME\",\"description\":\"Success\",\"color\":5763719}],\"content\":\"<@&525170830741602314>\"}" $WEBHOOK_URL
   when: on_success
 
 failure_notification:
@@ -144,6 +144,6 @@ failure_notification:
       - $WEBHOOK_URL
   stage: notification
   script:
-    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{'embeds':[{'title':'$CI_JOB_NAME','description':'Failure:$CI_PIPELINE_URL','color':15548997}],'content':'<@&525187902972362752>'}" $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_JOB_NAME\",\"description\":\"Failure:$CI_PIPELINE_URL\",\"color\":15548997}],\"content\":\"<@&525187902972362752>\"}" $WEBHOOK_URL
   when: on_failure
 
