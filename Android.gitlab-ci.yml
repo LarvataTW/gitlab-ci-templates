@@ -133,10 +133,7 @@ success_notification:
       - $WEBHOOK_URL
   stage: notification
   script:
-    - curl \
-      -H "Content-Type:application/json" \
-      -d '{"embeds":[{"title":"$CI_JOB_NAME","description":"Success","color":5763719,}],"content":<@PM>}' \
-      $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{"embeds":[{"title":"$CI_JOB_NAME","description":"Success","color":5763719,}],"content":<@PM>}" $WEBHOOK_URL
   when: on_success
 
 failure_notification:
@@ -149,9 +146,6 @@ failure_notification:
       - $WEBHOOK_URL
   stage: notification
   script:
-    - curl \
-      -H "Content-Type:application/json" \
-      -d '{"embeds":[{"title":"$CI_JOB_NAME","description":"Failure:$CI_PIPELINE_URL","color":15548997,}],"content":<@Mobile-App>}' \
-      $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{"embeds":[{"title":"$CI_JOB_NAME","description":"Failure:$CI_PIPELINE_URL","color":15548997,}],"content":<@Mobile-App>}" $WEBHOOK_URL
   when: on_failure
 
