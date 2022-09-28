@@ -12,6 +12,7 @@ stages:
   - test
   - package
   - deploy
+  - notification
 
 lint:
   tags:
@@ -121,3 +122,34 @@ default_module_release_ver_aab_google_play:
     #   script:
     #    - gdrive
     # TODO: put whole file to google drive
+
+success_notification:
+  only:
+    refs:
+      - master
+      - tags
+    variables:
+      - $WEBHOOK_URL
+  stage: notification
+  script:
+    - curl \
+    - -H "Content-Type:application/json" \
+    - -d '{"embeds":[{"title":"$CI_JOB_NAME","description":"Success","color":5763719,}],"content":<@PM>}' \
+    - $WEBHOOK_URL
+  when: on_success
+
+failure_notification:
+  only:
+    refs:
+      - master
+      - tags
+    variables:
+      - $WEBHOOK_URL
+  stage: notification
+  script:
+    - curl \
+    - -H "Content-Type:application/json" \
+    - -d '{"embeds":[{"title":"$CI_JOB_NAME","description":"Failure:$CI_PIPELINE_URL","color":15548997,}],"content":<@Mobile-App>}' \
+    - $WEBHOOK_URL
+  when: on_failure
+
