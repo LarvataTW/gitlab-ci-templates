@@ -133,7 +133,7 @@ discord_success_notification:
       - $DISCORD_SUCCESS_NOTIFY_ROLE_ID
   stage: notification
   script:
-    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_COMMIT_REF_NAME staging ver./google play internal test ver.\",\"description\":\"Success\",\"color\":5763719}],\"content\":\"<@&$DISCORD_SUCCESS_NOTIFY_ROLE_ID>\"}" $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_COMMIT_REF_NAME staging ver. / google play internal test ver. \",\"description\":\"Success\",\"color\":5763719}],\"content\":\"<@&$DISCORD_SUCCESS_NOTIFY_ROLE_ID>\"}" $WEBHOOK_URL
   when: on_success
 
 discord_failure_notification:
@@ -146,6 +146,6 @@ discord_failure_notification:
       - $DISCORD_FAILURE_NOTIFY_ROLE_ID
   stage: notification
   script:
-    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_COMMIT_REF_NAME staging ver./google play internal test ver.\",\"description\":\"Failure:$CI_PIPELINE_URL\",\"color\":15548997}],\"content\":\"<@&$DISCORD_FAILURE_NOTIFY_ROLE_ID>\"}" $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_COMMIT_REF_NAME staging ver. / google play internal test ver. \",\"description\":\"Failure:$CI_PIPELINE_URL\",\"color\":15548997}],\"content\":\"<@&$DISCORD_FAILURE_NOTIFY_ROLE_ID>\"}" $WEBHOOK_URL
   when: on_failure
 
