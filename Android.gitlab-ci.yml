@@ -123,27 +123,29 @@ default_module_release_ver_aab_google_play:
     #    - gdrive
     # TODO: put whole file to google drive
 
-success_notification:
+discord_success_notification:
   only:
     refs:
       - master
       - tags
     variables:
       - $WEBHOOK_URL
+      - $DISCORD_SUCCESS_NOTIFY_ROLE_ID
   stage: notification
   script:
-    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_JOB_NAME\",\"description\":\"Success\",\"color\":5763719}],\"content\":\"<@&525170830741602314>\"}" $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_COMMIT_REF_NAME staging ver./google play internal test ver.\",\"description\":\"Success\",\"color\":5763719}],\"content\":\"<@&$DISCORD_SUCCESS_NOTIFY_ROLE_ID>\"}" $WEBHOOK_URL
   when: on_success
 
-failure_notification:
+discord_failure_notification:
   only:
     refs:
       - master
       - tags
     variables:
       - $WEBHOOK_URL
+      - $DISCORD_FAILURE_NOTIFY_ROLE_ID
   stage: notification
   script:
-    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_JOB_NAME\",\"description\":\"Failure:$CI_PIPELINE_URL\",\"color\":15548997}],\"content\":\"<@&525187902972362752>\"}" $WEBHOOK_URL
+    - curl -i -H "Accept:application/json" -H "Content-Type:application/json" -X POST --data "{\"embeds\":[{\"title\":\"$CI_COMMIT_REF_NAME staging ver./google play internal test ver.\",\"description\":\"Failure:$CI_PIPELINE_URL\",\"color\":15548997}],\"content\":\"<@&$DISCORD_FAILURE_NOTIFY_ROLE_ID>\"}" $WEBHOOK_URL
   when: on_failure
 
