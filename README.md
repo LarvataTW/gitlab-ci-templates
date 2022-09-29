@@ -90,3 +90,8 @@ buildVariant_main_pushToFirebase:
     - develop
   extends: .appModuleDebugVerToFirebase
 ```
+
+4. discord webhook
+> * WEBHOOK_URL = discord server channel url
+> * DISCORD_SUCCESS_NOTIFY_ROLE_ID / DISCORD_FAILURE_NOTIFY_ROLE_ID = metion id, ex: <@123456>
+>> reference: https://birdie0.github.io/discord-webhooks-guide/other/discord_markdown.html
