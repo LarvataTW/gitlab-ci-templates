@@ -1,14 +1,11 @@
 build:
   stage: build
-  image: "registry.gitlab.com/happiness9721/auto-build-image/master:cd583f16605fa19480d37fdd0729b1bb8318b630"
+  image: 'registry.gitlab.com/happiness9721/auto-build-image/master:cd583f16605fa19480d37fdd0729b1bb8318b630'
   variables:
-    DOCKER_TLS_CERTDIR: ""
-    HTTP_PROXY: ""
-    HTTPS_PROXY: ""
-    NO_PROXY: "localhost,127.0.0.1,.your.internal.domain"
+    DOCKER_TLS_CERTDIR: ''
   services:
-    - name: docker:19.03.12-dind
-      command: ["--mtu=1440"]
+    - name: 'docker:20.10.12-dind'
+      command: ['--mtu=1440', '--tls=false', '--host=tcp://0.0.0.0:2375']
   script:
     - |
       if [[ -z "$CI_COMMIT_TAG" ]]; then
@@ -19,7 +16,12 @@ build:
         export CI_APPLICATION_TAG=${CI_APPLICATION_TAG:-$CI_COMMIT_TAG}
       fi
     - /build/build.sh
+  artifacts:
+    reports:
+      dotenv: gl-auto-build-variables.env
   rules:
+    - if: '$BUILD_DISABLED'
+      when: never
     - if: '$AUTO_DEVOPS_PLATFORM_TARGET == "EC2"'
       when: never
     - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
@@ -30,4 +32,6 @@ build_artifact:
     - printf "To build your project, please create a build_artifact job into your .gitlab-ci.yml file.\nMore information at https://docs.gitlab.com/ee/ci/cloud_deployment\n"
     - exit 1
   rules:
+    - if: '$BUILD_DISABLED'
+      when: never
     - if: '$AUTO_DEVOPS_PLATFORM_TARGET == "EC2"'
