@@ -1,7 +1,7 @@
 include:
   - "https://raw.githubusercontent.com/LarvataTW/gitlab-ci-templates/master/Jobs/Sonar-Test.gitlab-ci.yml"
 
-image: androidsdk/android-30
+image: mobiledevops/android-sdk-image:33.0.2
 
 variables:
   LC_ALL: en_US.UTF-8
