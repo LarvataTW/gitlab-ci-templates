@@ -1,6 +1,6 @@
 include:
   - "https://raw.githubusercontent.com/LarvataTW/gitlab-ci-templates/master/Jobs/Sonar-Test.gitlab-ci.yml"
-    
+
 stages:
   - build
   - test
@@ -30,13 +30,18 @@ archive_adhoc_app:
     - bundle install
     - bundle exec pod install
     - echo "${MATCH_GC_KEYS}" > gc_keys.json
-    - bundle exec fastlane ios archive_adhoc --verbose
+    - >
+      if [ "$FASTLANE_ADHOC_METHOD" = "testflight" ]; then
+        bundle exec fastlane ios archive_appstore --verbose
+      else
+        bundle exec fastlane ios archive_adhoc --verbose
+      fi
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     paths:
       - ${XCODE_PRODUCT_NAME}-${CI_COMMIT_REF_SLUG}.ipa
       - ${XCODE_PRODUCT_NAME}-${CI_COMMIT_REF_SLUG}.app.dSYM.zip
-      
+
 archive_staging_app:
   stage: build
   tags:
@@ -52,7 +57,12 @@ archive_staging_app:
     - bundle install
     - bundle exec pod install
     - echo "${MATCH_GC_KEYS}" > gc_keys.json
-    - bundle exec fastlane ios archive_adhoc --verbose
+    - >
+      if [ "$FASTLANE_ADHOC_METHOD" = "testflight" ]; then
+        bundle exec fastlane ios archive_appstore --verbose
+      else
+        bundle exec fastlane ios archive_adhoc --verbose
+      fi
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     paths:
@@ -94,7 +104,7 @@ deploy_adhoc_app:
     - bundle exec fastlane ios beta_${FASTLANE_ADHOC_METHOD} --verbose
   environment:
     name: review/$CI_COMMIT_REF_NAME
-      
+
 deploy_staging_app:
   stage: deploy
   tags:
