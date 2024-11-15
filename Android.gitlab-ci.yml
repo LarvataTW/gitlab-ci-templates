@@ -1,5 +1,5 @@
 include:
-  - "https://raw.githubusercontent.com/LarvataTW/gitlab-ci-templates/master/Jobs/Sonar-Test.gitlab-ci.yml"
+  - local: "Jobs/Sonar-Test.gitlab-ci.yml"
 
 image: androidsdk/android-30
 
