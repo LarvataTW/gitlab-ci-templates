@@ -1,6 +1,9 @@
+variables:
+  AUTO_BUILD_IMAGE_VERSION: 'v4.3.0'
+
 build:
   stage: build
-  image: 'registry.gitlab.com/happiness9721/auto-build-image/master:cd583f16605fa19480d37fdd0729b1bb8318b630'
+  image: '${CI_TEMPLATE_REGISTRY_HOST}/gitlab-org/cluster-integration/auto-build-image:${AUTO_BUILD_IMAGE_VERSION}'
   variables:
     DOCKER_TLS_CERTDIR: ''
   services:
