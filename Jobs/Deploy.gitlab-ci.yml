@@ -2,7 +2,7 @@ variables:
   AUTO_DEPLOY_IMAGE_VERSION: 'v2.20.0-larvata'
 
 .auto-deploy:
-  image: "${CI_TEMPLATE_REGISTRY_HOST}/LarvataTW/auto-deploy-image:${AUTO_DEPLOY_IMAGE_VERSION}"
+  image: "${CI_TEMPLATE_REGISTRY_HOST}/larvatatw/auto-deploy-image:${AUTO_DEPLOY_IMAGE_VERSION}"
   dependencies: []
 
 review:
